@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-con-db
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/TU-USUARIO/TU-REPO-GITOPS.git' # Reemplaza con tu repo
+    targetRevision: HEAD
+    path: 'apps/app-con-db' # La ruta donde están los YAMLs de tu DB y App
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: app-db-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true # Fundamental para que cree app-db-demo automáticamente
