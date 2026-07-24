@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     # REEMPLAZA CON LA URL DE ESTE NUEVO REPOSITORIO GITOPS
-    repoURL: 'https://github.com/Husifork/argocdtesting'
+    repoURL: 'https://github.com/Husifork/argocdtestingg'
     targetRevision: HEAD # Apunta a la rama principal (main)
     path: 'apps/demo-app' # La ruta hacia donde está tu deployment.yaml
   destination:
