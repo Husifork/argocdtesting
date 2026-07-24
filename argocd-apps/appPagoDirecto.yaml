@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/Husifork/argocdtesting'
+    repoURL: 'https://github.com/Husifork/argocdtestin'
     targetRevision: HEAD
     path: 'apps/appPagoDirecto'
   destination:
