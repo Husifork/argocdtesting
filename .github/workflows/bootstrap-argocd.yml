@@ -1,0 +1,44 @@
+name: Bootstrap ArgoCD Apps
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'argocd-apps/**'
+
+jobs:
+  deploy-argocd-definitions:
+    runs-on: ubuntu-latest
+    
+    # Declaramos las variables a nivel del Job para que estén disponibles en todos los pasos
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v3
+
+    - name: Login en Azure y configuración de contexto AKS
+      run: |
+        # 1. Autenticación con el Service Principal usando las variables de entorno
+        az login --service-principal \
+          -u $ARM_CLIENT_ID \
+          -p $ARM_CLIENT_SECRET \
+          --tenant $ARM_TENANT_ID
+        
+        # 2. Fijar la suscripción objetivo
+        az account set --subscription $ARM_SUBSCRIPTION_ID
+        
+        # 3. Descargar el kubeconfig del clúster
+        az aks get-credentials \
+          --resource-group TU_RESOURCE_GROUP_AQUI \
+          --name TU_CLUSTER_AKS_AQUI \
+          --overwrite-existing
+
+    - name: Aplicar aplicaciones en ArgoCD
+      run: |
+        kubectl apply -f argocd-apps/
