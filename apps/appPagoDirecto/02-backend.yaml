@@ -16,17 +16,17 @@ spec:
     spec:
       containers:
       - name: backend
-        image: nginx:alpine # Reemplaza por la imagen de tu aplicación real
+        image: nginx:alpine 
         ports:
         - containerPort: 80
         env:
         - name: DB_HOST
-          value: "postgres-service" # Se comunica internamente por el nombre del Service
+          value: "postgres-service" 
         - name: DB_PORT
           value: "5432"
         envFrom:
         - secretRef:
-            name: postgres-secret # Reutiliza las credenciales
+            name: postgres-secret 
 ---
 apiVersion: v1
 kind: Service
@@ -34,7 +34,7 @@ metadata:
   name: backend-service
   namespace: app-db-demo
 spec:
-  type: LoadBalancer # Para que Azure le asigne una IP Pública
+  type: LoadBalancer 
   selector:
     app: backend
   ports:
