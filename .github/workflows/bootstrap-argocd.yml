@@ -35,8 +35,8 @@ jobs:
         
         # 3. Descargar el kubeconfig del clúster
         az aks get-credentials \
-          --resource-group TU_RESOURCE_GROUP_AQUI \
-          --name TU_CLUSTER_AKS_AQUI \
+          --resource-group rg-devopschallenge-dev \
+          --name aks-devopschallenge-dev \
           --overwrite-existing
 
     - name: Aplicar aplicaciones en ArgoCD
